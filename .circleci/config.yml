@@ -21,7 +21,7 @@ jobs: # a collection of steps
             - ./node_modules
       - run:
           name: install angular-cli
-          command: sudo npm install -g @angular/cli
+          command: sudo npm install -g --silent @angular/cli
       - run:
           name: check angular-cli version
           command: ng version
