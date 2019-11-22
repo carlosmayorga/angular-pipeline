@@ -34,9 +34,6 @@ jobs: # a collection of steps
           command: cat /etc/os-release
 
   build:
-    working_directory: ~/angular-pipeline
-    docker:
-      - image: circleci/node:10.16.3
     steps:
       - checkout
       - run:
@@ -44,9 +41,6 @@ jobs: # a collection of steps
           command: ng build --prod
 
   tests:
-    working_directory: ~/angular-pipeline
-    docker:
-      - image: circleci/node:10.16.3
     steps:
       - checkout
       - run:
