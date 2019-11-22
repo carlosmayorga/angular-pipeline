@@ -1,0 +1,25 @@
+// Variables
+$gob-white: rgb(255, 255, 255);
+$gob-dark:#161616;
+$gob-padding-nav-tittles: 20px;
+
+// Gob default styles
+@mixin gob-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.gob-navbar {
+  background-color: $gob-dark !important;
+}
+
+.nav-title {
+  color: $gob-white;
+  padding: $gob-padding-nav-tittles;
+}
+
+.centered-content {
+  @include gob-center;
+}
