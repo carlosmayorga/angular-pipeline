@@ -1,11 +1,17 @@
 version: 2.1 # use CircleCI 2.1
 jobs: # a collection of steps
-  initial: # runs not using Workflows must have a `build` job as entry point
+  build: # runs not using Workflows must have a `build` job as entry point
     working_directory: ~/angular-pipeline # directory where steps will run
     docker: # run the steps with Docker
       - image: circleci/node:10.16.3 # ...with this image as the primary container; this is where all `steps` will run
     steps: # a collection of executable commands
       - checkout # special step to check out source code to working directory
+      - run:
+          name: check
+          command: ls -ltr && pwd
+      - run:
+          name: know my OS
+          command: cat /etc/os-release
       - run:
           name: update-npm
           command: 'sudo npm install -g npm@latest'
@@ -25,24 +31,31 @@ jobs: # a collection of steps
       - run:
           name: check angular-cli version
           command: ng version
-
       - run:
-          name: check
-          command: ls -ltr && pwd
-      - run:
-          name: know my OS
-          command: cat /etc/os-release
-
-  build:
-    steps:
-      - checkout
-      - run:
-          name: build
+          name: angular build
           command: ng build --prod
 
   tests:
+    working_directory: ~/angular-pipeline
+    docker:
+      - image: circleci/node:10.16.3
     steps:
       - checkout
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: install-npm
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: install angular-cli
+          command: sudo npm install -g @angular/cli > /dev/null
       - run:
           name: tests
           command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
@@ -52,10 +65,7 @@ workflows:
   version: 2.1
   pipeline:
     jobs:
-      - initial
       - build:
-          requires:
-            - initial
           filters:
             branches:
               only: master
