@@ -25,3 +25,6 @@ jobs: # a collection of steps
       - run:
           name: check angular-cli version
           command: ng version
+      - run:
+          name: build
+          command: ng build --prod
