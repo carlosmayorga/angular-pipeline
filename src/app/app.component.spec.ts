@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'angular-pipeline'`, () => {
+  it(`should have as title 'Pipeline walkthrough'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('angular-pipeline');
+    expect(app.title).toEqual('Pipeline walkthrough');
   });
 
-  it('should render title in a h1 tag', () => {
+  it('should render a img', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to angular-pipeline!');
+    expect(compiled.querySelector('img'));
   });
 });

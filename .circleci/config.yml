@@ -1,6 +1,6 @@
 version: 2.1 # use CircleCI 2.1
 jobs: # a collection of steps
-  build: # runs not using Workflows must have a `build` job as entry point
+  initial: # runs not using Workflows must have a `build` job as entry point
     working_directory: ~/angular-pipeline # directory where steps will run
     docker: # run the steps with Docker
       - image: circleci/node:10.16.3 # ...with this image as the primary container; this is where all `steps` will run
@@ -25,14 +25,51 @@ jobs: # a collection of steps
       - run:
           name: check angular-cli version
           command: ng version
-      - run:
-          name: build
-          command: ng build --prod
+
       - run:
           name: check
           command: ls -ltr && pwd
       - run:
           name: know my OS
           command: cat /etc/os-release
+
+  build:
+    working_directory: ~/angular-pipeline
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - run:
+          name: build
+          command: ng build --prod
+
+  tests:
+    working_directory: ~/angular-pipeline
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - run:
+          name: tests
+          command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+
+
+workflows:
+  version: 2.1
+  pipeline:
+    jobs:
+      - initial
+      - build:
+          requires:
+            - initial
+          filters:
+            branches:
+              only: master
+      - tests:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
 
 
