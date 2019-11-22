@@ -57,8 +57,19 @@ jobs: # a collection of steps
           name: install angular-cli
           command: sudo npm install -g @angular/cli > /dev/null
       - run:
-          name: tests
-          command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+          name: test
+          command: npm test
+      - run:
+          name: code-coverage
+          command: './node_modules/.bin/nyc report --reporter=text-lcov'
+      - store_artifacts:
+          path: test-results.xml
+          prefix: tests
+      - store_artifacts:
+          path: coverage
+          prefix: coverage
+      - store_test_results:
+          path: test-results.xml
 
 
 workflows:
