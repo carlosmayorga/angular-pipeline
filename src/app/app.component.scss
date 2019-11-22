@@ -1,25 +1,69 @@
-// Variables
+/***********
+ Variables
+***********/
 $gob-white: rgb(255, 255, 255);
-$gob-dark:#161616;
 $gob-padding-nav-tittles: 20px;
+// -- Colors
+$gob-dark:#161616;
+$gob-aimate-bf:#14e2e2;
+$gob-aimate-af:#FF2A78;
+// -- Others
+$gob-tittle: 'Angular | CircleCI';
 
-// Gob default styles
+/***********
+ Defaults
+***********/
 @mixin gob-center {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
 .gob-navbar {
   background-color: $gob-dark !important;
 }
-
 .nav-title {
   color: $gob-white;
   padding: $gob-padding-nav-tittles;
 }
-
 .centered-content {
   @include gob-center;
+}
+
+/***********
+ Animations
+***********/
+.glitch-effect {
+  position: relative;
+  text-transform: uppercase;
+  color: $gob-dark;
+  letter-spacing: 10px;
+}
+.glitch-effect::before, .glitch-effect::after {
+  content: $gob-tittle;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-transform: uppercase;
+  opacity: .8;
+}
+.glitch-effect::before {
+  color: $gob-aimate-bf;
+  z-index: -1;
+  animation: effect .3s ease reverse infinite;
+}
+.glitch-effect::after {
+  color: $gob-aimate-af;
+  z-index: -2;
+  animation: effect .3s ease reverse infinite;
+}
+@keyframes effect {
+  0% {transform: translate(0)}
+  20% { transform: translate(-3px,3px)}
+  40% { transform: translate(-3px,-3px)}
+  60% { transform: translate(3px,3px)}
+  80% { transform: translate(3px,-3px)}
+  100% { transform: translate(0)}
 }
