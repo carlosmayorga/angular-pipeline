@@ -37,6 +37,7 @@ jobs: # a collection of steps
       - store_artifacts:
           path: dist/angular-pipeline/
 
+  ## TODO
   tests:
     working_directory: ~/angular-pipeline
     docker:
