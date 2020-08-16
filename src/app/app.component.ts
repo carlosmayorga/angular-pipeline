@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Maestria en Ingeniería de Software';
+  title = 'Maestría en Ingeniería de Software';
 }
