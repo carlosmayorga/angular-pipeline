@@ -63,6 +63,29 @@ jobs: # a collection of steps
           command: npm test
 
 
+  deploy:
+    working_directory: ~/angular-pipeline
+    docker:
+      - image: circleci/node:10.16.3-browsers
+    steps:
+      - checkout
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: install-npm
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: deploy to Firebase
+          command: firebase deploy --token $FIREBASE_TOKEN
+
+
 workflows:
   version: 2.1
   pipeline:
@@ -74,6 +97,12 @@ workflows:
       - tests:
           requires:
             - build
+          filters:
+            branches:
+              only: master
+      - deploy:
+          requires:
+            - test
           filters:
             branches:
               only: master
