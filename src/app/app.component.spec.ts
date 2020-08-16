@@ -20,10 +20,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'Pipeline walkthrough'`, () => {
+  it(`should have as title 'Maestría en Ingeniería de Software'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('Pipeline walkthrough');
+    expect(app.title).toEqual('Maestría en Ingeniería de Software');
   });
 
   it('should render a img', () => {
