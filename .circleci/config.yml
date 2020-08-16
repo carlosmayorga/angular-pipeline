@@ -85,6 +85,9 @@ jobs: # a collection of steps
           name: Install Firebase tools
           command: sudo npm install -g firebase-tools
       - run:
+          name: install angular-cli
+          command: sudo npm install -g @angular/cli > /dev/null
+      - run:
           name: Build the prod code
           command: ng build --prod
       - run:
