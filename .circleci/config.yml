@@ -83,7 +83,7 @@ jobs: # a collection of steps
             - ./node_modules
       - run:
           name: deploy to Firebase
-          command: firebase deploy --token $FIREBASE_TOKEN
+          command: ./node_modules/.bin/firebase deploy --token $FIREBASE_TOKEN
 
 
 workflows:
